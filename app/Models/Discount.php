@@ -7,5 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Discount extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
+    protected $fillable = [
+        'title','public','max_number_of_usage',
+        'expire_time'
+        ,'owner_user_id'
+    ];
+
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 }
