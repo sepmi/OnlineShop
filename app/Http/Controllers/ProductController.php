@@ -2,84 +2,83 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware(['auth','is_admin'])->except('showRelateProducts');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $product = new Product();
+        $categories = Category::all(['id','title']);
+
+        return view('products.create',compact('product','categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create([
+
+            'name' =>$request['name'],
+            'price' =>$request['price'],
+            'category_id' =>$request['category_id'],
+            'image' =>$request['image'],
+
+        ]);
+        return redirect()->route('products.show',$product)->with('success','product created succesfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Product $product)
     {
-        //
+        return view('products.show',compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Product $product)
     {
-        //
+
+        $categories = Category::all('id','title');
+
+        return view('products.edit',compact('product','categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+
+    public function update(StoreProductRequest $request, Product $product)
     {
-        //
+
+        $product ->name = $request['name'];
+        $product ->price = $request['price'];
+        $product ->category_id = $request['category_id'];
+        $product ->image = $request['image'];
+
+        $product ->save();
+
+
+        return redirect()->route('products.show',compact('product'))->with('success','product updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('index')->with('success','Product deleted successfully');
+    }
+
+
+    public function showRelateProducts(Category $category)
+    {
+
+        $products = $category->products;
+
+        return view('products.index',compact('products'));
     }
 }

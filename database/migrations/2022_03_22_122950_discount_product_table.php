@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create( 'product_discount', function ( Blueprint $table ) {
+        Schema::create( 'discount_product', function ( Blueprint $table ) {
             //$table->integer( 'product_id' )->unique( );
             //$table->unsignedBigInteger( 'discount_id' )->unique();
 

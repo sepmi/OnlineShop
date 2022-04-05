@@ -24,7 +24,21 @@ class StoreDiscountRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' =>['required','string'],
+            'public' =>['required','boolean'],
+            'canUseForAllProducts' => ['required','boolean'],
+            'max_number_of_uses' =>['required','integer'],
+            'max_number_of_user_uses' =>['required','integer'],
+            'discount_type' =>['required','string'],
+
+            'code' =>['nullable','string'],
+            'description' =>['nullable','string'],
+            'number_of_uses' =>['nullable','integer'],
+            'discount_amount_percentage'=>['nullable','integer'],
+            'discount_amount_amount'=>['nullable','integer'],
+            'starts_at'=>['nullable','date_format:Y-m-d H:i:s'],
+            'expires_at' =>['nullable','date_format:Y-m-d H:i:s'],
+
         ];
     }
 }

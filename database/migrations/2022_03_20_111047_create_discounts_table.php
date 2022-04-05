@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('code')->nullable();
             $table->string('description')->nullable();
             $table->boolean('public');
+            $table->boolean('canUseForAllProducts');
             $table->unsignedBigInteger( 'number_of_uses' )->nullable( );
             $table->unsignedBigInteger('max_number_of_uses');
             $table->unsignedBigInteger('max_number_of_user_uses');
-            $table->timestamp('expire_time');
+//            $table->timestamp('expire_time');
             $table->string('discount_type');
             $table->unsignedBigInteger( 'discount_amount_percentage')->nullable();
             $table->unsignedBigInteger( 'discount_amount_amount' )->nullable();

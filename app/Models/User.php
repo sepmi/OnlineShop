@@ -46,6 +46,7 @@ class User extends Authenticatable
 
 
     public function discounts(){
-        return $this->belongsTo(Discount::class);
+//        return $this->belongsTo(Discount::class);
+        return $this->belongsToMany(Discount::class);
     }
 }
