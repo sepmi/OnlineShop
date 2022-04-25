@@ -27,7 +27,7 @@ class StoreProductRequest extends FormRequest
             'name' =>['required','string'],
             'price' =>['required','integer'],
             'category_id' =>['required','integer'],
-//            'image'=>[],
+            'image'=>['nullable'],
 
         ];
     }

@@ -75,6 +75,17 @@
                     </ul>
                 </li>
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ __('Super Category') }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item text-center" href="{{route('superCategories.index')}}">{{ __('Show') }}</a></li>
+                        <li><a class="dropdown-item text-center" href="{{route('superCategories.create')}}">{{ __('Create') }}</a></li>
+                    </ul>
+                </li>
+
+
                 <a class="nav-link active" aria-current="page" href="{{route('index')}}">(admin){{ __('Home') }}</a>
             </div>
 

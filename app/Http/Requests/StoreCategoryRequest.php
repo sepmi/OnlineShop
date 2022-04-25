@@ -25,7 +25,8 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'title' => ['required','string'],
-            'image' => ['nullable']
+            'image' => ['nullable'],
+            'super_category_id' => ['required','integer']
         ];
     }
 }

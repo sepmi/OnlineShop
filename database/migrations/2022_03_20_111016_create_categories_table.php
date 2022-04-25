@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('image')->nullable();
+            $table->unsignedBigInteger('super_category_id');
             $table->softDeletes();
             $table->timestamps();
 
+            $table->foreign('super_category_id')->references('id')->on('super_categories')->onDelete('cascade');
 
         });
     }

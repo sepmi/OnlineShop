@@ -19,7 +19,7 @@
         <tbody>
         @foreach ( $categories as $category)
 
-            @if ($category->deleted_at == null)
+
 
                 <tr>
                     <td>
@@ -43,7 +43,7 @@
 
 
                 </tr>
-            @endif
+
 
         @endforeach
 

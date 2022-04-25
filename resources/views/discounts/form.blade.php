@@ -118,13 +118,15 @@
 
         <div class="form-group row p-1">
             <label for=""> starts_at[Y-m-d H:i:s]</label>
-            <input type="text" name="starts_at" class="form-control"  value="{{ old('starts_at') ?? $discount->starts_at}}">
+            <input type="date" name="starts_at_first" class="form-control" value="{{ old('starts_at_first') ?? $discount->starts_at_first}}">
+            <input type="time" name="starts_at_second" class="form-control" min="00:00" max="24:00"  value="{{ old('starts_at_second') ?? $discount->starts_at_second}}">
 
         </div>
 
         <div class="form-group row p-1">
             <label for=""> expires_at[Y-m-d H:i:s]</label>
-            <input type="text" name="expires_at" class="form-control"  value="{{ old('expires_at') ?? $discount->expires_at}}">
+            <input type="date" name="expires_at_first" class="form-control"  value="{{ old('expires_at_first') ?? $discount->expires_at_first}}">
+            <input type="time" name="expires_at_second" class="form-control" min="00:00" max="24:00"  value="{{ old('expires_at_second') ?? $discount->expires_at_second}}">
 
 
 

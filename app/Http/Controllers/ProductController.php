@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -25,14 +26,26 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
+
         $product = Product::create([
 
             'name' =>$request['name'],
             'price' =>$request['price'],
             'category_id' =>$request['category_id'],
-            'image' =>$request['image'],
+//            'image' =>$request['image'],
 
         ]);
+        $image_name = time().'-'.$request->file('image')->getClientOriginalName();
+
+        Image::create([
+            'image' => $image_name,
+            'product_id' =>$product->id
+        ]);
+
+
+        $request->file('image')->storeAs('images/',$image_name);
+
+
         return redirect()->route('products.show',$product)->with('success','product created succesfully');
     }
 
@@ -58,7 +71,19 @@ class ProductController extends Controller
         $product ->name = $request['name'];
         $product ->price = $request['price'];
         $product ->category_id = $request['category_id'];
-        $product ->image = $request['image'];
+
+
+
+        if ($product ->image){
+            $image = Image::find($product->id);
+            $image_name = time().'-'.$request->file('image')->getClientOriginalName();
+
+            $image->image = $image_name;
+            $request->file('image')->storeAs('images/',$image_name);
+
+            $image->save();
+
+        }
 
         $product ->save();
 
@@ -76,8 +101,10 @@ class ProductController extends Controller
 
     public function showRelateProducts(Category $category)
     {
+//        $categoryId = $category->id;
+//        $products = Product::where('category_id',$categoryId)->get(['id','name']);
 
-        $products = $category->products;
+        $products = $category->products()->get(['id','name']);
 
         return view('products.index',compact('products'));
     }

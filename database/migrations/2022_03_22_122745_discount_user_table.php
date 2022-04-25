@@ -17,8 +17,8 @@ return new class extends Migration
            // $table->unsignedInteger( 'user_id' )->unsigned( );
             //$table->unsignedBigInteger( 'discount_id' );
 
-            $table->foreignId('discount_id')->constrained('discounts');
-            $table->foreignid('user_id')->constrained('users');
+            $table->foreignId('discount_id')->constrained('discounts')->onDelete('cascade');
+            $table->foreignid('user_id')->constrained('users')->onDelete('cascade');
 
 
         });

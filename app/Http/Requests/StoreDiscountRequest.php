@@ -36,8 +36,10 @@ class StoreDiscountRequest extends FormRequest
             'number_of_uses' =>['nullable','integer'],
             'discount_amount_percentage'=>['nullable','integer'],
             'discount_amount_amount'=>['nullable','integer'],
-            'starts_at'=>['nullable','date_format:Y-m-d H:i:s'],
-            'expires_at' =>['nullable','date_format:Y-m-d H:i:s'],
+            'starts_at_first'=>['nullable','date_format:Y-m-d','required_with:starts_at_second','required_with:expires_at_first,expires_at_second'],
+            'starts_at_second'=>['nullable','date_format:H:i','required_with:starts_at_first'],
+            'expires_at_first' =>['nullable','date_format:Y-m-d','required_with:expires_at_second','required_with:starts_at_first,starts_at_second'],
+            'expires_at_second' =>['nullable','date_format:H:i','required_with:expires_at_first'],
 
         ];
     }

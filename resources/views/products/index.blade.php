@@ -18,14 +18,18 @@
 
 
 
-                        @isset($product->image)
+                    @isset($product ->image )
                             <div class="mb-2">
-                                <a href="{{route('eachProduct',$product->id)}}">
+{{--                                <a href="{{route('eachProduct',$product->id)}}">--}}
+                                <a >
+{{--                                    @foreach($product->images as $image)--}}
+{{--                                        <img class="w-50 " src="{{asset('images/'. $image->image)}}" alt="this is image file">--}}
+{{--                                    @endforeach--}}
                                     <img class="w-50 " src="{{asset('images/'.$product->image ->image)}}" alt="this is image file">
                                 </a>
                             </div>
-                        @endisset
 
+                    @endisset
                         <div class="mb-2">
                             <p>Price: {{$product ->price}}</p>
 
@@ -39,9 +43,9 @@
                             <a type="button" href="{{route('products.create')}}" class="btn btn-success">New</a>
                         @endif
 
-                        @if (!is_null($product->image))
-                            <a type="button" class="btn btn-success ds-block" href="{{route('imageDownload',[$product->image->image,$product->name])}}" >Download</a>
-                        @endif
+{{--                        @if (!is_null($product->image))--}}
+{{--                            <a type="button" class="btn btn-success ds-block" href="{{route('imageDownload',[$product->image->image,$product->name])}}" >Download</a>--}}
+{{--                        @endif--}}
 
 
                         @if (Auth::check() && Auth::user()->is_admin == 1)

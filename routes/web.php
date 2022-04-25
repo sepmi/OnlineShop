@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SuperCategoryController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,11 @@ Auth::routes();
 
 Route::group(['prefix' => '/panel' ],function (){
 
+    Route::resource('/superCategories',SuperCategoryController::class);
+/////
     Route::resource('/categories',CategoryController::class);
-
+    Route::get('/categories/{superCategory}/showRelated',[CategoryController::class,'showRelateCategories'])->name('categories.showRelated');
+/////
     Route::resource('/products',ProductController::class)->except('index');
     Route::get('/products/{category}/showRelated',[ProductController::class,'showRelateProducts'])->name('products.showRelated');
 /////

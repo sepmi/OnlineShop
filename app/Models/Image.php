@@ -11,6 +11,14 @@ class Image extends Model
     protected $fillable=['image','product_id'];
 
     public function product(){
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function superCategory(){
+        return $this->belongsTo(SuperCategory::class);
     }
 }

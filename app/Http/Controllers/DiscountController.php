@@ -7,6 +7,7 @@ use App\Models\Discount;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Nette\Utils\DateTime;
 
 class DiscountController extends Controller
 {
@@ -27,7 +28,7 @@ class DiscountController extends Controller
     public function create()
     {
         $users = User::all(['id','fname','lname']);
-        $products = Product::all();
+        $products = Product::all(['id','name']);
         $discount =  new Discount();
 
         return view('discounts.create',compact('users','products','discount'));
@@ -36,6 +37,16 @@ class DiscountController extends Controller
 
     public function store(StoreDiscountRequest $request)
     {
+        $starts_at = NUll; $expires_at = NULL;
+
+       if($request['starts_at_first'] != NULL && $request['starts_at_second'] != NULL){
+           $starts_at = $request['starts_at_first'] .' '. $request['starts_at_second'].':00';
+       }
+
+        if($request['expires_at_first'] != NULL && $request['expires_at_second'] != NULL){
+            $expires_at = $request['expires_at_first'] .' '. $request['expires_at_second'].':00';
+        }
+
 
         $discount = Discount::create([
             'title' =>$request['title'],
@@ -50,8 +61,9 @@ class DiscountController extends Controller
             'number_of_uses' =>$request['number_of_uses'],
             'discount_amount_percentage'=>$request['discount_amount_percentage'],
             'discount_amount_amount'=>$request['discount_amount_amount'],
-            'starts_at'=>$request['starts_at'],
-            'expires_at' =>$request['expires_at'],
+            'starts_at'=> $starts_at,
+            'expires_at' =>$expires_at,
+
 
         ]);
 
@@ -82,7 +94,7 @@ class DiscountController extends Controller
     public function edit(Discount $discount)
     {
         $users = User::all(['id','fname','lname']);
-        $products = Product::all();
+        $products = Product::all(['id','name']);
         return view('discounts.edit',compact('discount','users','products'));
     }
 
@@ -144,10 +156,12 @@ class DiscountController extends Controller
 
     public function showAvailableDiscounts()
     {
-        // first should get all the dicoutn that they didn't expire
-                //  expire_time   >  actual time
-        //
-        $discounts = Discount::all();
+
+
+//        date_default_timezone_set('Asia/Tehran');   fix it in the app.php
+        $time = date('Y-m-d H:i:s');
+
+        $discounts = Discount::where('expires_at','>',$time)->get();
 
         return view('discounts.allDiscounts',compact('discounts'));
     }
